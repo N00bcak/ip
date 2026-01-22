@@ -6,4 +6,10 @@ list
 todo cs2103t iP
 unmark 2
 list
+delete 1
+list
+mark 99
+mark 0
+todo
+blah
 bye

@@ -44,6 +44,28 @@ public class Parser {
     }
 
     /**
+     * The more eagle-eyed reader will notice this is the same function as above.
+     * But it is nevertheless copy-pasted in order to prevent coupling.
+     * @param inp Raw input string
+     * @return An integer corresponding to the index.
+     */
+    public int parseDeleteTask(String inp) throws IllegalArgumentException, IndexOutOfBoundsException {
+        String[] tokens = inp.split(" ");
+        if (tokens.length < 2) {
+            throw new IllegalArgumentException("Input should be of format 'delete x'!");
+        }
+        /*
+         Note: The website specification implies the list uses 1-indexing
+         (as far as the user is concerned)
+         So we must compensate.
+        */
+        int index = Integer.parseInt(tokens[1]) - 1;
+        if (index < 0 || index >= this.taskManager.size()) {
+            throw new IndexOutOfBoundsException("Invalid task number.");
+        }
+        return index;
+    }
+    /**
      * Parses a string of the form
      * "todo <arbitrary non-empty string>"
      * If successful, returns a Hashmap containing that string.

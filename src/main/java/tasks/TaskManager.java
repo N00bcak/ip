@@ -33,6 +33,10 @@ public class TaskManager {
         this.get(taskIndex).markUndone();
     }
 
+    public void delete(int taskIndex) {
+        this.taskList.remove(taskIndex);
+    }
+
     /**
      * Report the number of tasks in the manager's purview
      * @return An integer denoting the number of tasks.

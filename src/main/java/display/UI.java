@@ -89,6 +89,17 @@ public class UI {
     }
 
     /**
+     * Prints a message to confirm that the task has been deleted.
+     * @param taskIndex The index of the deleted task.
+     */
+    public void showTaskDeleted(int taskIndex) {
+        this.showMessage(
+            "Noted. I've removed this task:\n"
+            + this.taskManager.get(taskIndex)
+        );
+    }
+
+    /**
      * Prints the list of tasks the user has right now.
      */
     public void showTasks() {

@@ -44,6 +44,16 @@ public class Dooki {
                     break;
                 } else if (inp.equals("list")) {
                     this.dookiUI.showTasks();
+                } else if (inp.startsWith("delete")) {
+                    try {
+                        int delIndex = parser.parseDeleteTask(inp);
+                        this.dookiTasks.delete(delIndex);
+                        this.dookiUI.showTaskDeleted(delIndex);
+                    } catch (IllegalArgumentException e) {
+                        this.dookiUI.showError("'delete' should come with an index :(");
+                    } catch (IndexOutOfBoundsException e) {
+                        this.dookiUI.showError("You did not provide a valid task index :(");
+                    }
                 } else if (inp.startsWith("mark") || inp.startsWith("unmark")) {
                     try {
                         int markIndex = parser.parseMarkOrUnmark(inp);
