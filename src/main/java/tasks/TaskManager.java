@@ -25,6 +25,14 @@ public class TaskManager {
         return this.taskList.get(taskIndex);
     }
 
+    public void markTaskAsDone(int taskIndex) {
+        this.get(taskIndex).markDone();
+    }
+
+    public void markTaskAsUndone(int taskIndex) {
+        this.get(taskIndex).markUndone();
+    }
+
     /**
      * Report the number of tasks in the manager's purview
      * @return An integer denoting the number of tasks.

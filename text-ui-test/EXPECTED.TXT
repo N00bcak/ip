@@ -1,7 +1,26 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+______________________________
+Hello! I'm Dooki
+What can I do for you?
+______________________________
+______________________________
+Got it. I've added this task:
+[ ] task1
+Now you have 1 tasks in the list.
+______________________________
+______________________________
+Got it. I've added this task:
+[ ] task2
+Now you have 2 tasks in the list.
+______________________________
+______________________________
+ Nice! I've marked this task as done:
+ [X] task1
+______________________________
+______________________________
+Here are the tasks in your list:
+1. [X] task1
+2. [ ] task2
+______________________________
+______________________________
+Bye. Hope to see you again soon!
+______________________________

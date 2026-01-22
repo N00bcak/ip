@@ -10,6 +10,11 @@ import tasks.TaskManager;
 public class UI {
     // Adapted output format from https://nus-cs2103-ay2526-s2.github.io/website/schedule/week2/project.html
     private static final String LONG_LINE = "_".repeat(30);
+    private final TaskManager taskManager;
+
+    public UI(TaskManager taskManager) {
+        this.taskManager = taskManager;
+    }
 
     private void showLine() {
         System.out.println(LONG_LINE);
@@ -20,6 +25,15 @@ public class UI {
         System.out.println(message);
         this.showLine();
     }
+
+    /**
+     * Displays an error to the user
+     * @param message The error message
+     */
+    public void showError(String message) {
+        this.showMessage("[ERROR] " + message);
+    }
+
 
     /**
      * Greets the user.
@@ -46,16 +60,43 @@ public class UI {
      */
     public void showTaskAdded(Task task) {
         this.showMessage(
-            "added: " + task
+            "Got it. I've added this task:\n"
+            + task + "\n"
+            + "Now you have " + this.taskManager.size() + " tasks in the list."
         );
     }
 
     /**
-     * Prints the list of tasks the user has right now.
-     * @param taskManager the task manager to retrieve tasks from.
+     * Prints a message to confirm that the task has been marked as done.
+     * @param taskIndex The index of the marked task.
      */
-    public void showTasks(TaskManager taskManager) {
-        this.showMessage(taskManager.toString());
+    public void showTaskMarked(int taskIndex) {
+        this.showLine();
+        System.out.println(" Nice! I've marked this task as done:");
+        System.out.println(" " + this.taskManager.get(taskIndex));
+        this.showLine();
+
+    }
+
+    /**
+     * Prints a message to confirm that the task has been marked as undone.
+     * @param taskIndex The index of the marked task.
+     */
+    public void showTaskUnmarked(int taskIndex) {
+        this.showLine();
+        System.out.println(" OK, I've marked this task as not done yet:");
+        System.out.println(" " + this.taskManager.get(taskIndex));
+        this.showLine();
+    }
+
+    /**
+     * Prints the list of tasks the user has right now.
+     */
+    public void showTasks() {
+        this.showMessage(
+            "Here are the tasks in your list:\n"
+            + taskManager.toString()
+        );
     }
 
 }

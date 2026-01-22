@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import display.UI;
+import parser.Parser;
 import tasks.Task;
 import tasks.TaskManager;
 
@@ -9,17 +10,19 @@ import tasks.TaskManager;
  */
 
 public class Dooki {
-    private final UI dookiUI;
-    private final Scanner sc;
     private final TaskManager dookiTasks;
+    private final Scanner sc;
+    private final UI dookiUI;
+    private final Parser parser;
 
     /**
      * Constructor for Dooki.
      */
     public Dooki() {
-        this.dookiUI = new UI();
-        this.sc = new Scanner(System.in);
         this.dookiTasks = new TaskManager();
+        this.sc = new Scanner(System.in);
+        this.dookiUI = new UI(this.dookiTasks);
+        this.parser = new Parser(this.dookiTasks);
     }
 
     /**
@@ -33,7 +36,22 @@ public class Dooki {
                 this.dookiUI.showGoodbye();
                 break;
             } else if (inp.equals("list")) {
-                this.dookiUI.showTasks(this.dookiTasks);
+                this.dookiUI.showTasks();
+            } else if (inp.startsWith("mark ") || inp.startsWith("unmark ")) {
+                try {
+                    int markIndex = parser.parseMarkOrUnmark(inp);
+                    if (inp.startsWith("mark ")) {
+                        this.dookiTasks.markTaskAsDone(markIndex);
+                        this.dookiUI.showTaskMarked(markIndex);
+                    } else {
+                        this.dookiTasks.markTaskAsUndone(markIndex);
+                        this.dookiUI.showTaskUnmarked(markIndex);
+                    }
+                } catch (IllegalArgumentException e) {
+                    this.dookiUI.showError("'mark'/'unmark' should come with an index :(");
+                } catch (IndexOutOfBoundsException e) {
+                    this.dookiUI.showError("You did not provide a valid task index :(");
+                }
             } else {
                 Task newTask = new Task(inp);
                 this.dookiTasks.add(newTask);
