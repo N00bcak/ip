@@ -49,7 +49,7 @@ public class TaskManager {
             StringBuilder lst = new StringBuilder();
             for (int i = 0; i < this.size(); i++) {
                 lst.append((i + 1));
-                lst.append(". ");
+                lst.append(".");
                 lst.append(this.get(i));
                 if (i != this.size() - 1) {
                     lst.append("\n");

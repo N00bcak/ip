@@ -2,9 +2,12 @@ package tasks;
 /**
  * Denotes a task that user provides.
  * A task can be done or not done.
+ * This is a base class and should no longer be instantiated.
+ * ... is what I gather from reading the specification, which is
+ * awfully vague about this matter
  */
 
-public class Task {
+public abstract class Task {
     private final String description;
     private boolean done;
 

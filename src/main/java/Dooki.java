@@ -1,9 +1,12 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 import display.UI;
 import parser.Parser;
-import tasks.Task;
+import tasks.DeadlineTask;
+import tasks.EventTask;
 import tasks.TaskManager;
+import tasks.TodoTask;
 
 /**
  * Entrypoint to chatting with Dooki.
@@ -28,7 +31,7 @@ public class Dooki {
     /**
      * Starts Dooki's main loop.
      */
-    public void start() {
+    public void start() throws Exception {
         this.dookiUI.showWelcome("Dooki");
         while (true) {
             String inp = this.sc.nextLine();
@@ -37,10 +40,10 @@ public class Dooki {
                 break;
             } else if (inp.equals("list")) {
                 this.dookiUI.showTasks();
-            } else if (inp.startsWith("mark ") || inp.startsWith("unmark ")) {
+            } else if (inp.startsWith("mark") || inp.startsWith("unmark")) {
                 try {
                     int markIndex = parser.parseMarkOrUnmark(inp);
-                    if (inp.startsWith("mark ")) {
+                    if (inp.startsWith("mark")) {
                         this.dookiTasks.markTaskAsDone(markIndex);
                         this.dookiUI.showTaskMarked(markIndex);
                     } else {
@@ -52,15 +55,40 @@ public class Dooki {
                 } catch (IndexOutOfBoundsException e) {
                     this.dookiUI.showError("You did not provide a valid task index :(");
                 }
+            } else if (inp.startsWith("todo")) {
+                try {
+                    HashMap<String, String> taskMap = parser.parseTodoTask(inp);
+                    TodoTask newTask = new TodoTask(taskMap.get("desc"));
+                    this.dookiTasks.add(newTask);
+                    this.dookiUI.showTaskAdded(newTask);
+                } catch (IllegalArgumentException e) {
+                    this.dookiUI.showError("Your todo task has an invalid name :(");
+                }
+            } else if (inp.startsWith("deadline")) {
+                try {
+                    HashMap<String, String> taskMap = parser.parseDeadlineTask(inp);
+                    DeadlineTask newTask = new DeadlineTask(taskMap.get("desc"), taskMap.get("by"));
+                    this.dookiTasks.add(newTask);
+                    this.dookiUI.showTaskAdded(newTask);
+                } catch (IllegalArgumentException e) {
+                    this.dookiUI.showError("Your deadline task has an invalid name :(");
+                }
+            } else if (inp.startsWith("event")) {
+                try {
+                    HashMap<String, String> taskMap = parser.parseEventTask(inp);
+                    EventTask newTask = new EventTask(taskMap.get("desc"), taskMap.get("from"), taskMap.get("to"));
+                    this.dookiTasks.add(newTask);
+                    this.dookiUI.showTaskAdded(newTask);
+                } catch (IllegalArgumentException e) {
+                    this.dookiUI.showError("Your deadline task has an invalid name :(");
+                }
             } else {
-                Task newTask = new Task(inp);
-                this.dookiTasks.add(newTask);
-                this.dookiUI.showTaskAdded(newTask);
+                this.dookiUI.showError("I didn't understand that command. Please try again?");
             }
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Dooki dooki = new Dooki();
         dooki.start();
     }

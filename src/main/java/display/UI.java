@@ -34,7 +34,6 @@ public class UI {
         this.showMessage("[ERROR] " + message);
     }
 
-
     /**
      * Greets the user.
      *
@@ -71,10 +70,10 @@ public class UI {
      * @param taskIndex The index of the marked task.
      */
     public void showTaskMarked(int taskIndex) {
-        this.showLine();
-        System.out.println(" Nice! I've marked this task as done:");
-        System.out.println(" " + this.taskManager.get(taskIndex));
-        this.showLine();
+        this.showMessage(
+            "Nice! I've marked this task as done:\n"
+            + this.taskManager.get(taskIndex)
+        );
 
     }
 
@@ -83,10 +82,10 @@ public class UI {
      * @param taskIndex The index of the marked task.
      */
     public void showTaskUnmarked(int taskIndex) {
-        this.showLine();
-        System.out.println(" OK, I've marked this task as not done yet:");
-        System.out.println(" " + this.taskManager.get(taskIndex));
-        this.showLine();
+        this.showMessage(
+            "OK, I've marked this task as not done yet:\n"
+            + this.taskManager.get(taskIndex)
+        );
     }
 
     /**

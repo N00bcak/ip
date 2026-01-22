@@ -1,5 +1,7 @@
 package parser;
 
+import java.util.HashMap;
+
 import tasks.TaskManager;
 
 /**
@@ -37,5 +39,79 @@ public class Parser {
             throw new IndexOutOfBoundsException("Invalid task number.");
         }
         return index;
+    }
+
+    /**
+     * Parses a string of the form
+     * "todo <arbitrary non-empty string>"
+     * If successful, returns a Hashmap containing that string.
+     * @param inp Raw input string
+     * @return A hashmap containing the title of the task in the "desc" key.
+     */
+    public HashMap<String, String> parseTodoTask(String inp) throws IllegalArgumentException {
+        // Inspired by https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
+        String arg = inp.replaceFirst("todo", "").strip();
+        if (arg.isEmpty()) {
+            throw new IllegalArgumentException("todo is not a valid task!");
+        }
+        HashMap<String, String> taskSpec = new HashMap<>();
+        taskSpec.put("desc", arg);
+        return taskSpec;
+    }
+
+    /**
+     * Parses a string of the form
+     * "deadline <arbitrary non-empty string> /by <arbitrary non-empty string>"
+     * If successful, returns a Hashmap containing those 2 strings.
+     * @param inp Raw input string
+     * @return A hashmap containing:
+     *      - the title of the task in the "desc" key.
+     *      - the deadline of the task in the "by" key.
+     */
+    public HashMap<String, String> parseDeadlineTask(String inp) throws IllegalArgumentException {
+        // Inspired by https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
+        String deadlineString = inp.replaceFirst("deadline", "").strip();
+        if (deadlineString.isEmpty()) {
+            throw new IllegalArgumentException("deadline is not a valid task!");
+        }
+        String[] args = deadlineString.split("/by ");
+        if (args.length != 2) {
+            throw new IllegalArgumentException("deadline expects EXACTLY ONE /by");
+        }
+        HashMap<String, String> taskSpec = new HashMap<>();
+        taskSpec.put("desc", args[0].strip());
+        taskSpec.put("by", args[1].strip());
+        return taskSpec;
+    }
+
+    /**
+     * Parses a string of the form
+     * "event <arbitrary non-empty string> /from <arbitrary non-empty string> /to <arbitrary non-empty string>"
+     * If successful, returns a Hashmap containing those 3 strings.
+     * @param inp Raw input string
+     * @return A hashmap containing:
+     *      - the title of the task in the "desc" key.
+     *      - the start time of the task in the "from" key.
+     *      - the end time of the task in the "to" key.
+     */
+    public HashMap<String, String> parseEventTask(String inp) throws IllegalArgumentException {
+        // Inspired by https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
+        String eventString = inp.replaceFirst("event", "").strip();
+        if (eventString.isEmpty()) {
+            throw new IllegalArgumentException("event is not a valid task!");
+        }
+        String[] args = eventString.split("/from ");
+        HashMap<String, String> taskSpec = new HashMap<>();
+        taskSpec.put("desc", args[0].strip());
+        if (args.length != 2) {
+            throw new IllegalArgumentException("event expects EXACTLY ONE /from");
+        }
+        args = args[1].split("/to ");
+        if (args.length != 2) {
+            throw new IllegalArgumentException("event expects EXACTLY ONE /to");
+        }
+        taskSpec.put("from", args[0].strip());
+        taskSpec.put("to", args[1].strip());
+        return taskSpec;
     }
 }
