@@ -1,5 +1,9 @@
-task1
-task2
-mark 1
+event school /from idk /to i spend too much time here :-(
+list
+deadline dead /by line
+mark 2
+list
+todo cs2103t iP
+unmark 2
 list
 bye

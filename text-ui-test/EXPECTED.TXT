@@ -4,22 +4,62 @@ What can I do for you?
 ______________________________
 ______________________________
 Got it. I've added this task:
-[ ] task1
+[E][ ] school (from: idk to: i spend too much time here :-()
 Now you have 1 tasks in the list.
 ______________________________
 ______________________________
+Here are the tasks in your list:
+1.[E][ ] school (from: idk to: i spend too much time here :-()
+______________________________
+______________________________
 Got it. I've added this task:
-[ ] task2
+[D][ ] dead (by: line)
 Now you have 2 tasks in the list.
 ______________________________
 ______________________________
- Nice! I've marked this task as done:
- [X] task1
+Nice! I've marked this task as done:
+[D][X] dead (by: line)
 ______________________________
 ______________________________
 Here are the tasks in your list:
-1. [X] task1
-2. [ ] task2
+1.[E][ ] school (from: idk to: i spend too much time here :-()
+2.[D][X] dead (by: line)
+______________________________
+______________________________
+Got it. I've added this task:
+[T][ ] cs2103t iP
+Now you have 3 tasks in the list.
+______________________________
+______________________________
+OK, I've marked this task as not done yet:
+[D][ ] dead (by: line)
+______________________________
+______________________________
+Here are the tasks in your list:
+1.[E][ ] school (from: idk to: i spend too much time here :-()
+2.[D][ ] dead (by: line)
+3.[T][ ] cs2103t iP
+______________________________
+______________________________
+Noted. I've removed this task:
+[D][ ] dead (by: line)
+______________________________
+______________________________
+Here are the tasks in your list:
+1.[D][ ] dead (by: line)
+2.[T][ ] cs2103t iP
+______________________________
+______________________________
+[ERROR] You did not provide a valid task index :(
+______________________________
+______________________________
+[ERROR] You did not provide a valid task index :(
+______________________________
+______________________________
+[ERROR] Your todo task has an invalid description :(
+______________________________
+______________________________
+[ERROR] I didn't understand that command. Please try again?
 ______________________________
 ______________________________
 Bye. Hope to see you again soon!
