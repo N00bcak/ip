@@ -1,45 +1,49 @@
 import java.util.Scanner;
 
+import display.UI;
+import tasks.Task;
+import tasks.TaskManager;
+
 /**
  * Entrypoint to chatting with Dooki.
  */
 
 public class Dooki {
-    // Adapted output format from https://nus-cs2103-ay2526-s2.github.io/website/schedule/week2/project.html
-    private static final String LONG_LINE = "_".repeat(30);
+    private final UI dookiUI;
+    private final Scanner sc;
+    private final TaskManager dookiTasks;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        greetUser();
-        while (scanner.hasNextLine()) {
-            String inp = scanner.nextLine();
-            /*
-            Technically it was never specified whether non-lower-case
-            would be accepted or not. So...
-             */
+    /**
+     * Constructor for Dooki.
+     */
+    public Dooki() {
+        this.dookiUI = new UI();
+        this.sc = new Scanner(System.in);
+        this.dookiTasks = new TaskManager();
+    }
+
+    /**
+     * Starts Dooki's main loop.
+     */
+    public void start() {
+        this.dookiUI.showWelcome("Dooki");
+        while (true) {
+            String inp = this.sc.nextLine();
             if (inp.equals("bye")) {
-                sayGoodbye();
+                this.dookiUI.showGoodbye();
                 break;
+            } else if (inp.equals("list")) {
+                this.dookiUI.showTasks(this.dookiTasks);
+            } else {
+                Task newTask = new Task(inp);
+                this.dookiTasks.add(newTask);
+                this.dookiUI.showTaskAdded(newTask);
             }
-            saySomething(inp);
         }
     }
 
-    private static void greetUser() {
-        System.out.println(LONG_LINE);
-        System.out.println("Hello! I'm Dooki");
-        System.out.println("What can I do for you?");
-        System.out.println(LONG_LINE);
+    public static void main(String[] args) {
+        Dooki dooki = new Dooki();
+        dooki.start();
     }
-
-    private static void saySomething(String msg) {
-        System.out.println(LONG_LINE);
-        System.out.println(msg);
-        System.out.println(LONG_LINE);
-    }
-
-    private static void sayGoodbye() {
-        saySomething("Bye. Hope to see you again soon!");
-    }
-
 }
