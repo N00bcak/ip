@@ -1,5 +1,6 @@
 package parser;
 
+import exceptions.CommandIsMissingArgumentException;
 import exceptions.TaskDescriptionIsEmptyException;
 import exceptions.TaskIsMissingArgumentException;
 import org.junit.jupiter.api.AfterEach;
@@ -90,5 +91,16 @@ public class CommandParserTest {
             TaskIsMissingArgumentException.class,
             () -> parser.parseEventTask("event party /to tomorrow")
         );
+    }
+
+    @Test
+    void parseFindValidInputReturnsKeyword() {
+        String keyword = parser.parseFindTask("find project");
+        assertEquals("project", keyword);
+    }
+
+    @Test
+    void parseFindMissingKeywordThrowsArgumentMissing() {
+        assertThrows(CommandIsMissingArgumentException.class, () -> parser.parseFindTask("find   "));
     }
 }

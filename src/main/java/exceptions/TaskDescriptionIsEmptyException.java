@@ -5,6 +5,10 @@ package exceptions;
  */
 
 public class TaskDescriptionIsEmptyException extends Exception {
+    /**
+     * Constructs the exception.
+     * @param cmd Full text command
+     */
     public TaskDescriptionIsEmptyException(String cmd) {
         super("Parser received command \"" + cmd + "\", which is a task missing a description.");
     }

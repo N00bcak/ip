@@ -41,6 +41,14 @@ Here are the tasks in your list:
 3.[T][ ] cs2103t iP
 ______________________________
 ______________________________
+Here are the matching tasks in your list:
+1.[D][ ] dead (by: Dec 02 2019)
+______________________________
+______________________________
+Here are the matching tasks in your list:
+1.[T][ ] cs2103t iP
+______________________________
+______________________________
 Noted. I've removed this task:
 [E][ ] school (from: Dec 01 2019 to: Dec 03 2019)
 ______________________________
@@ -48,6 +56,9 @@ ______________________________
 Here are the tasks in your list:
 1.[D][ ] dead (by: Dec 02 2019)
 2.[T][ ] cs2103t iP
+______________________________
+______________________________
+There are no matching tasks in your list.
 ______________________________
 ______________________________
 [ERROR] You did not provide a valid task index :(

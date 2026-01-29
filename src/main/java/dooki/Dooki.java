@@ -3,9 +3,11 @@ package dooki;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import display.UI;
+import exceptions.NoTasksFoundException;
 import exceptions.TaskDescriptionIsEmptyException;
 import exceptions.TaskIsMissingArgumentException;
 import exceptions.UnsupportedCommandException;
@@ -120,6 +122,16 @@ public class Dooki {
                         this.dookiUI.showError("Your event task is missing argument " + e.missingArg);
                     } catch (DateTimeParseException e) {
                         this.dookiUI.showError("Your event dates are invalid. Please use yyyy-MM-dd format.");
+                    }
+                } else if (inp.startsWith("find")) {
+                    try {
+                        String keyword = commandParser.parseFindTask(inp);
+                        List<Task> matches = this.dookiTasks.find(keyword);
+                        this.dookiUI.showFindResults(matches);
+                    } catch (IllegalArgumentException e) {
+                        this.dookiUI.showError("I can't find it if it doesn't exist :(");
+                    } catch (NoTasksFoundException e) {
+                        this.dookiUI.showError("I couldn't find any tasks with that description :(");
                     }
                 } else {
                     throw new UnsupportedCommandException();

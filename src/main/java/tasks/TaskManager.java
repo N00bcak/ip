@@ -1,7 +1,9 @@
 package tasks;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import exceptions.NoTasksFoundException;
 import storage.Storage;
 
 /**
@@ -73,6 +75,25 @@ public class TaskManager {
      */
     public int size() {
         return this.taskList.size();
+    }
+
+    /**
+     * Find all tasks with given keyword in their descriptions.
+     * @param keyword given description keyword.
+     * @return a list of matching tasks.
+     */
+    public List<Task> find(String keyword) throws NoTasksFoundException {
+        String lowered = keyword.toLowerCase();
+        List<Task> matches = new ArrayList<>();
+        for (Task task : this.taskList) {
+            if (task.getDescription().toLowerCase().contains(lowered)) {
+                matches.add(task);
+            }
+        }
+        if (matches.isEmpty()) {
+            throw new NoTasksFoundException();
+        }
+        return matches;
     }
 
     private void persist() {
