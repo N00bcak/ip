@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+cd "$SCRIPT_DIR"
+
 # create bin directory if it doesn't exist
 if [ ! -d "../bin" ]
 then
@@ -12,15 +15,21 @@ then
     rm ACTUAL.TXT
 fi
 
+# remove previous data file to ensure deterministic test state
+if [ -e "../data/dooki.txt" ]
+then
+    rm "../data/dooki.txt"
+fi
+
 # compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
+if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/Dooki.java
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../out/production/ip2 Dooki < input.txt > ACTUAL.TXT
+java -classpath ../bin Dooki < input.txt > ACTUAL.TXT
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT

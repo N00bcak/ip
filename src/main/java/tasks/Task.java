@@ -17,8 +17,12 @@ public abstract class Task {
      * @param description Describes the task
      */
     public Task(String description) {
-        this.description = description;
-        this.done = false;
+        this(description, false);
+    }
+
+    protected Task(String description, boolean done) {
+        this.description = (description == null) ? "" : description;
+        this.done = done;
     }
 
     public void markDone() {
@@ -27,6 +31,14 @@ public abstract class Task {
 
     public void markUndone() {
         this.done = false;
+    }
+
+    public boolean isDone() {
+        return this.done;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public String getDoneSymbol() {

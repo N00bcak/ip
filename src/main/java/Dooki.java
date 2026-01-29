@@ -5,7 +5,9 @@ import display.UI;
 import exceptions.TaskDescriptionIsEmptyException;
 import exceptions.TaskIsMissingArgumentException;
 import exceptions.UnsupportedCommandException;
-import parser.Parser;
+import parser.CommandParser;
+import parser.StorageParser;
+import storage.Storage;
 import tasks.DeadlineTask;
 import tasks.EventTask;
 import tasks.TaskManager;
@@ -19,16 +21,19 @@ public class Dooki {
     private final TaskManager dookiTasks;
     private final Scanner sc;
     private final UI dookiUI;
-    private final Parser parser;
+    private final CommandParser commandParser;
+    private final Storage dookiStore;
 
     /**
      * Constructor for Dooki.
      */
     public Dooki() {
-        this.dookiTasks = new TaskManager();
+
+        this.dookiStore = new Storage(new StorageParser());
+        this.dookiTasks = new TaskManager(this.dookiStore);
         this.sc = new Scanner(System.in);
         this.dookiUI = new UI(this.dookiTasks);
-        this.parser = new Parser(this.dookiTasks);
+        this.commandParser = new CommandParser(this.dookiTasks);
     }
 
     /**
@@ -46,7 +51,7 @@ public class Dooki {
                     this.dookiUI.showTasks();
                 } else if (inp.startsWith("delete")) {
                     try {
-                        int delIndex = parser.parseDeleteTask(inp);
+                        int delIndex = commandParser.parseDeleteTask(inp);
                         this.dookiTasks.delete(delIndex);
                         this.dookiUI.showTaskDeleted(delIndex);
                     } catch (IllegalArgumentException e) {
@@ -56,7 +61,7 @@ public class Dooki {
                     }
                 } else if (inp.startsWith("mark") || inp.startsWith("unmark")) {
                     try {
-                        int markIndex = parser.parseMarkOrUnmark(inp);
+                        int markIndex = commandParser.parseMarkOrUnmark(inp);
                         if (inp.startsWith("mark")) {
                             this.dookiTasks.markTaskAsDone(markIndex);
                             this.dookiUI.showTaskMarked(markIndex);
@@ -71,7 +76,7 @@ public class Dooki {
                     }
                 } else if (inp.startsWith("todo")) {
                     try {
-                        HashMap<String, String> taskMap = parser.parseTodoTask(inp);
+                        HashMap<String, String> taskMap = commandParser.parseTodoTask(inp);
                         TodoTask newTask = new TodoTask(taskMap.get("desc"));
                         this.dookiTasks.add(newTask);
                         this.dookiUI.showTaskAdded(newTask);
@@ -80,7 +85,7 @@ public class Dooki {
                     }
                 } else if (inp.startsWith("deadline")) {
                     try {
-                        HashMap<String, String> taskMap = parser.parseDeadlineTask(inp);
+                        HashMap<String, String> taskMap = commandParser.parseDeadlineTask(inp);
                         DeadlineTask newTask = new DeadlineTask(taskMap.get("desc"), taskMap.get("by"));
                         this.dookiTasks.add(newTask);
                         this.dookiUI.showTaskAdded(newTask);
@@ -91,8 +96,12 @@ public class Dooki {
                     }
                 } else if (inp.startsWith("event")) {
                     try {
-                        HashMap<String, String> taskMap = parser.parseEventTask(inp);
-                        EventTask newTask = new EventTask(taskMap.get("desc"), taskMap.get("from"), taskMap.get("to"));
+                        HashMap<String, String> taskMap = commandParser.parseEventTask(inp);
+                        EventTask newTask = new EventTask(
+                            taskMap.get("desc"),
+                            taskMap.get("from"),
+                            taskMap.get("to")
+                        );
                         this.dookiTasks.add(newTask);
                         this.dookiUI.showTaskAdded(newTask);
                     } catch (TaskDescriptionIsEmptyException e) {

@@ -11,10 +11,10 @@ import tasks.TaskManager;
  * Will use the internal state of Dooki to make validation checks,
  * and throw errors otherwise.
  */
-public class Parser {
+public class CommandParser {
     private final TaskManager taskManager;
 
-    public Parser(TaskManager taskManager) {
+    public CommandParser(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 

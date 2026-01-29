@@ -2,11 +2,24 @@ package tasks;
 
 import java.util.ArrayList;
 
+import storage.Storage;
+
 /**
  * Manages the user's list of tasks.
  */
 public class TaskManager {
     private final ArrayList<Task> taskList = new ArrayList<>();
+    // Compose storage so we can autosync on every iteration.
+    private final Storage storage;
+
+    /**
+     * Initializes the task manager with existing storage.
+     * @param storage The storage location
+     */
+    public TaskManager(Storage storage) {
+        this.storage = storage;
+        this.taskList.addAll(this.storage.load());
+    }
 
     /**
      * Adds a task to the manager.
@@ -14,6 +27,7 @@ public class TaskManager {
      */
     public void add(Task task) {
         this.taskList.add(task);
+        this.persist();
     }
 
     /**
@@ -25,16 +39,31 @@ public class TaskManager {
         return this.taskList.get(taskIndex);
     }
 
+    /**
+     * Marks a task as done.
+     * @param taskIndex the index of the task to be marked as done.
+     */
     public void markTaskAsDone(int taskIndex) {
         this.get(taskIndex).markDone();
+        this.persist();
     }
 
+    /**
+     * Marks a task as undone.
+     * @param taskIndex the index of the task to be marked as undone.
+     */
     public void markTaskAsUndone(int taskIndex) {
         this.get(taskIndex).markUndone();
+        this.persist();
     }
 
+    /**
+     * Marks a task for deletion.
+     * @param taskIndex the index of the task to be deleted.
+     */
     public void delete(int taskIndex) {
         this.taskList.remove(taskIndex);
+        this.persist();
     }
 
     /**
@@ -43,6 +72,12 @@ public class TaskManager {
      */
     public int size() {
         return this.taskList.size();
+    }
+
+    private void persist() {
+        if (this.storage != null) {
+            this.storage.save(this.taskList);
+        }
     }
 
     @Override
