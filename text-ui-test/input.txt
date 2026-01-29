@@ -6,8 +6,11 @@ list
 todo cs2103t iP
 unmark 2
 list
+find dead
+find ip
 delete 1
 list
+find meeting
 mark 99
 mark 0
 todo

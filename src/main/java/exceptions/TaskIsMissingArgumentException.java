@@ -3,7 +3,6 @@ package exceptions;
 /**
  * Custom exception that activates when a task is missing some required arguments.
  */
-
 public class TaskIsMissingArgumentException extends Exception {
     public final String missingArg;
 

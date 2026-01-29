@@ -3,6 +3,8 @@ package display;
 import tasks.Task;
 import tasks.TaskManager;
 
+import java.util.List;
+
 /**
  * Handles all interactions to the user (i.e. printing stuff via the text interface).
  */
@@ -111,6 +113,22 @@ public class UI {
             "Here are the tasks in your list:\n"
             + taskManager.toString()
         );
+    }
+
+    /**
+     * Prints all tasks whose descriptions match the given keyword.
+     * @param matches Matching tasks.
+     */
+    public void showFindResults(List<Task> matches) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Here are the matching tasks in your list:\n");
+        for (int i = 0; i < matches.size(); i++) {
+            builder.append(i + 1).append(".").append(matches.get(i));
+            if (i != matches.size() - 1) {
+                builder.append("\n");
+            }
+        }
+        this.showMessage(builder.toString());
     }
 
 }

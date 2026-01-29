@@ -3,7 +3,6 @@ package exceptions;
 /**
  * Custom exception that activates when a command is unsupported.
  */
-
 public class UnsupportedCommandException extends Exception {
     /**
      * Constructs an exception indicating the command is not recognized.

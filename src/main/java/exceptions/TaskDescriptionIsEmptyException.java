@@ -3,7 +3,6 @@ package exceptions;
 /**
  * Custom exception that activates when a task description is empty
  */
-
 public class TaskDescriptionIsEmptyException extends Exception {
     /**
      * Creates an exception indicating the provided command lacked a description.

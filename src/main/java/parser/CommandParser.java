@@ -2,6 +2,7 @@ package parser;
 
 import java.util.HashMap;
 
+import exceptions.CommandIsMissingArgumentException;
 import exceptions.TaskDescriptionIsEmptyException;
 import exceptions.TaskIsMissingArgumentException;
 import tasks.TaskManager;
@@ -145,5 +146,20 @@ public class CommandParser {
         taskSpec.put("from", args[0].strip());
         taskSpec.put("to", args[1].strip());
         return taskSpec;
+    }
+
+    /**
+     * Parses a string of the form "find <arbitrary non-empty string>".
+     * Note that this string will be used as a keyword to search for tasks.
+     * @param inp Raw input string.
+     * @return the keyword to search for.
+     * @throws IllegalArgumentException if keyword is missing or blank.
+     */
+    public String parseFindTask(String inp) throws CommandIsMissingArgumentException {
+        String keyword = inp.replaceFirst("find", "").strip();
+        if (keyword.isEmpty()) {
+            throw new CommandIsMissingArgumentException(inp);
+        }
+        return keyword;
     }
 }
