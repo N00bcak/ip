@@ -16,6 +16,9 @@ import tasks.TodoTask;
  */
 public class StorageParser {
 
+    /**
+     * Constructor for StorageParser.
+     */
     public StorageParser() {
     }
 

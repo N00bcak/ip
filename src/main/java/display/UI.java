@@ -12,6 +12,10 @@ public class UI {
     private static final String LONG_LINE = "_".repeat(30);
     private final TaskManager taskManager;
 
+    /**
+     * Constructor for Dooki's UI.
+     * @param taskManager The to-be-composed task manager.
+     */
     public UI(TaskManager taskManager) {
         this.taskManager = taskManager;
     }

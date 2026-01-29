@@ -130,6 +130,10 @@ public class Dooki {
         }
     }
 
+    /**
+     * Entrypoint for all Java programs
+     * @param args Java CLI args (unused)
+     */
     public static void main(String[] args) {
         Dooki dooki = new Dooki();
         dooki.start();

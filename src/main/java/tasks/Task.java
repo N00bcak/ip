@@ -25,14 +25,24 @@ public abstract class Task {
         this.done = done;
     }
 
+    /** 
+     * Mark the task as done.
+     */
     public void markDone() {
         this.done = true;
     }
 
+    /** 
+     * Mark the task as not done.
+     */
     public void markUndone() {
         this.done = false;
     }
 
+    /**
+     * Reports whether the task is done.
+     * @return true if marked done, false otherwise.
+     */
     public boolean isDone() {
         return this.done;
     }

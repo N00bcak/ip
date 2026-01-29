@@ -14,6 +14,10 @@ import tasks.TaskManager;
 public class CommandParser {
     private final TaskManager taskManager;
 
+    /**
+     * Constructor for CommandParser.
+     * @param taskManager The to-be-composed task manager.
+     */
     public CommandParser(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
