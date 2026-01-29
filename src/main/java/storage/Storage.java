@@ -90,7 +90,6 @@ public class Storage {
 
     /**
      * Formats the task for export into a save file.
-     * Despite
      * @param task The task to be exported
      * @return A string describing the task.
      */
@@ -111,7 +110,7 @@ public class Storage {
                 "D",
                 status,
                 task.getDescription(),
-                deadlineTask.getDeadline()
+                deadlineTask.getDeadline().toString()
             );
         }
         if (task instanceof EventTask eventTask) {
@@ -120,8 +119,8 @@ public class Storage {
                 "E",
                 status,
                 task.getDescription(),
-                eventTask.getFrom(),
-                eventTask.getTo()
+                eventTask.getFrom().toString(),
+                eventTask.getTo().toString()
             );
         }
 

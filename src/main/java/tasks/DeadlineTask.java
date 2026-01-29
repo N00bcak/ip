@@ -1,27 +1,33 @@
 package tasks;
-/**
- * Denotes a task with a deadline
- */
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * Denotes a task with a deadline.
+ */
 public class DeadlineTask extends Task {
-    private final String deadline;
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private final LocalDate deadline;
 
     /**
-     * Constructor for DeadlineTask
+     * Constructor for DeadlineTask.
      * @param description Description of task.
-     * @param deadline Deadline of task.
+     * @param deadline Deadline of task as LocalDate.
      */
-    public DeadlineTask(String description, String deadline) {
+    public DeadlineTask(String description, LocalDate deadline) {
         super(description);
         this.deadline = deadline;
     }
 
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return this.deadline;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.deadline + ")";
+        // Reused from https://nus-cs2103-ay2526-s2.github.io/website/schedule/week3/project.html
+        String formattedDeadline = this.deadline.format(OUTPUT_FORMAT);
+        return "[D]" + super.toString() + " (by: " + formattedDeadline + ")";
     }
 }

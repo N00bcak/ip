@@ -90,12 +90,12 @@ public class UI {
 
     /**
      * Prints a message to confirm that the task has been deleted.
-     * @param taskIndex The index of the deleted task.
+     * @param task The deleted task.
      */
-    public void showTaskDeleted(int taskIndex) {
+    public void showTaskDeleted(Task task) {
         this.showMessage(
             "Noted. I've removed this task:\n"
-            + this.taskManager.get(taskIndex)
+            + task
         );
     }
 

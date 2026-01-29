@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -10,6 +12,7 @@ import parser.StorageParser;
 import storage.Storage;
 import tasks.DeadlineTask;
 import tasks.EventTask;
+import tasks.Task;
 import tasks.TaskManager;
 import tasks.TodoTask;
 
@@ -52,8 +55,8 @@ public class Dooki {
                 } else if (inp.startsWith("delete")) {
                     try {
                         int delIndex = commandParser.parseDeleteTask(inp);
-                        this.dookiTasks.delete(delIndex);
-                        this.dookiUI.showTaskDeleted(delIndex);
+                        Task removed = this.dookiTasks.delete(delIndex);
+                        this.dookiUI.showTaskDeleted(removed);
                     } catch (IllegalArgumentException e) {
                         this.dookiUI.showError("'delete' should come with an index :(");
                     } catch (IndexOutOfBoundsException e) {
@@ -86,21 +89,26 @@ public class Dooki {
                 } else if (inp.startsWith("deadline")) {
                     try {
                         HashMap<String, String> taskMap = commandParser.parseDeadlineTask(inp);
-                        DeadlineTask newTask = new DeadlineTask(taskMap.get("desc"), taskMap.get("by"));
+                        LocalDate deadline = LocalDate.parse(taskMap.get("by"));
+                        DeadlineTask newTask = new DeadlineTask(taskMap.get("desc"), deadline);
                         this.dookiTasks.add(newTask);
                         this.dookiUI.showTaskAdded(newTask);
                     } catch (TaskDescriptionIsEmptyException e) {
                         this.dookiUI.showError("Your deadline task has an invalid description :(");
                     } catch (TaskIsMissingArgumentException e) {
                         this.dookiUI.showError("Your deadline task is missing argument " + e.missingArg);
+                    } catch (DateTimeParseException e) {
+                        this.dookiUI.showError("Your deadline date is invalid. Please use yyyy-MM-dd format.");
                     }
                 } else if (inp.startsWith("event")) {
                     try {
                         HashMap<String, String> taskMap = commandParser.parseEventTask(inp);
+                        LocalDate from = LocalDate.parse(taskMap.get("from"));
+                        LocalDate to = LocalDate.parse(taskMap.get("to"));
                         EventTask newTask = new EventTask(
                             taskMap.get("desc"),
-                            taskMap.get("from"),
-                            taskMap.get("to")
+                            from,
+                            to
                         );
                         this.dookiTasks.add(newTask);
                         this.dookiUI.showTaskAdded(newTask);
@@ -108,6 +116,8 @@ public class Dooki {
                         this.dookiUI.showError("Your event task has an invalid description :(");
                     } catch (TaskIsMissingArgumentException e) {
                         this.dookiUI.showError("Your event task is missing argument " + e.missingArg);
+                    } catch (DateTimeParseException e) {
+                        this.dookiUI.showError("Your event dates are invalid. Please use yyyy-MM-dd format.");
                     }
                 } else {
                     throw new UnsupportedCommandException();

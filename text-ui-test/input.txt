@@ -1,6 +1,6 @@
-event school /from idk /to i spend too much time here :-(
+event school /from 2019-12-01 /to 2019-12-03
 list
-deadline dead /by line
+deadline dead /by 2019-12-02
 mark 2
 list
 todo cs2103t iP

@@ -61,9 +61,10 @@ public class TaskManager {
      * Marks a task for deletion.
      * @param taskIndex the index of the task to be deleted.
      */
-    public void delete(int taskIndex) {
-        this.taskList.remove(taskIndex);
+    public Task delete(int taskIndex) {
+        Task removed = this.taskList.remove(taskIndex);
         this.persist();
+        return removed;
     }
 
     /**

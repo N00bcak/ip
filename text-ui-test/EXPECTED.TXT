@@ -4,26 +4,26 @@ What can I do for you?
 ______________________________
 ______________________________
 Got it. I've added this task:
-[E][ ] school (from: idk to: i spend too much time here :-()
+[E][ ] school (from: Dec 01 2019 to: Dec 03 2019)
 Now you have 1 tasks in the list.
 ______________________________
 ______________________________
 Here are the tasks in your list:
-1.[E][ ] school (from: idk to: i spend too much time here :-()
+1.[E][ ] school (from: Dec 01 2019 to: Dec 03 2019)
 ______________________________
 ______________________________
 Got it. I've added this task:
-[D][ ] dead (by: line)
+[D][ ] dead (by: Dec 02 2019)
 Now you have 2 tasks in the list.
 ______________________________
 ______________________________
 Nice! I've marked this task as done:
-[D][X] dead (by: line)
+[D][X] dead (by: Dec 02 2019)
 ______________________________
 ______________________________
 Here are the tasks in your list:
-1.[E][ ] school (from: idk to: i spend too much time here :-()
-2.[D][X] dead (by: line)
+1.[E][ ] school (from: Dec 01 2019 to: Dec 03 2019)
+2.[D][X] dead (by: Dec 02 2019)
 ______________________________
 ______________________________
 Got it. I've added this task:
@@ -32,21 +32,21 @@ Now you have 3 tasks in the list.
 ______________________________
 ______________________________
 OK, I've marked this task as not done yet:
-[D][ ] dead (by: line)
+[D][ ] dead (by: Dec 02 2019)
 ______________________________
 ______________________________
 Here are the tasks in your list:
-1.[E][ ] school (from: idk to: i spend too much time here :-()
-2.[D][ ] dead (by: line)
+1.[E][ ] school (from: Dec 01 2019 to: Dec 03 2019)
+2.[D][ ] dead (by: Dec 02 2019)
 3.[T][ ] cs2103t iP
 ______________________________
 ______________________________
 Noted. I've removed this task:
-[D][ ] dead (by: line)
+[E][ ] school (from: Dec 01 2019 to: Dec 03 2019)
 ______________________________
 ______________________________
 Here are the tasks in your list:
-1.[D][ ] dead (by: line)
+1.[D][ ] dead (by: Dec 02 2019)
 2.[T][ ] cs2103t iP
 ______________________________
 ______________________________

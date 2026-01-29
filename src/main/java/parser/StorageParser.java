@@ -1,5 +1,8 @@
 package parser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import exceptions.ParseStorageLineFailureException;
 import tasks.DeadlineTask;
 import tasks.EventTask;
@@ -47,12 +50,23 @@ public class StorageParser {
             if (parts.length < 4) {
                 throw new ParseStorageLineFailureException("DeadlineTask '" + line + "' has no 'by' field");
             }
-            task = new DeadlineTask(description, parts[3]);
+            try {
+                LocalDate deadline = LocalDate.parse(parts[3]);
+                task = new DeadlineTask(description, deadline);
+            } catch (DateTimeParseException e) {
+                throw new ParseStorageLineFailureException("DeadlineTask '" + line + "' has invalid date");
+            }
         } else if (type.equals("E")) {
             if (parts.length < 5) {
                 throw new ParseStorageLineFailureException("EventTask '" + line + "' has no 'from' or 'to' field");
             }
-            task = new EventTask(description, parts[3], parts[4]);
+            try {
+                LocalDate from = LocalDate.parse(parts[3]);
+                LocalDate to = LocalDate.parse(parts[4]);
+                task = new EventTask(description, from, to);
+            } catch (DateTimeParseException e) {
+                throw new ParseStorageLineFailureException("EventTask '" + line + "' has invalid date(s)");
+            }
         } else {
             throw new ParseStorageLineFailureException("Received unknown task type");
         }
