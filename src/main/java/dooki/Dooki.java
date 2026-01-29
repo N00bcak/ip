@@ -1,3 +1,5 @@
+package dooki;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
@@ -17,7 +19,7 @@ import tasks.TaskManager;
 import tasks.TodoTask;
 
 /**
- * Entrypoint to chatting with Dooki.
+ * Entrypoint to chatting with dooki.Dooki.
  */
 
 public class Dooki {
@@ -28,7 +30,7 @@ public class Dooki {
     private final Storage dookiStore;
 
     /**
-     * Constructor for Dooki.
+     * Constructor for dooki.Dooki.
      */
     public Dooki() {
 
@@ -40,7 +42,7 @@ public class Dooki {
     }
 
     /**
-     * Starts Dooki's main loop.
+     * Starts dooki.Dooki's main loop.
      */
     public void start() {
         this.dookiUI.showWelcome("Dooki");
