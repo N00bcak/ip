@@ -71,12 +71,11 @@ public class CommandParser {
         return index;
     }
     /**
-     * Parses a string of the form
-     * "todo <arbitrary non-empty string>"
-     * If successful, returns a Hashmap containing that string.
-     * Adapted: https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
-     * @param inp Raw input string
-     * @return A hashmap containing the title of the task in the "desc" key.
+    * Parses a string of the form {@code "todo DESCRIPTION"} where DESCRIPTION is non-empty.
+    * If successful, returns a Hashmap containing that string.
+    * Adapted: https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
+    * @param inp Raw input string
+    * @return A hashmap containing the title of the task in the "desc" key.
      */
     public HashMap<String, String> parseTodoTask(String inp) throws TaskDescriptionIsEmptyException {
         String arg = inp.replaceFirst("todo", "").strip();
@@ -89,14 +88,13 @@ public class CommandParser {
     }
 
     /**
-     * Parses a string of the form
-     * "deadline <arbitrary non-empty string> /by <arbitrary non-empty string>"
-     * If successful, returns a Hashmap containing those 2 strings.
-     * Adapted: https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
-     * @param inp Raw input string
-     * @return A hashmap containing:
-     *      - the title of the task in the "desc" key.
-     *      - the deadline of the task in the "by" key.
+    * Parses a string of the form {@code "deadline DESCRIPTION /by DEADLINE"} with both parts non-empty.
+    * If successful, returns a Hashmap containing those 2 strings.
+    * Adapted: https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
+    * @param inp Raw input string
+    * @return A hashmap containing:
+    *      - the title of the task in the "desc" key.
+    *      - the deadline of the task in the "by" key.
      */
     public HashMap<String, String> parseDeadlineTask(
             String inp
@@ -116,15 +114,14 @@ public class CommandParser {
     }
 
     /**
-     * Parses a string of the form
-     * "event <arbitrary non-empty string> /from <arbitrary non-empty string> /to <arbitrary non-empty string>"
-     * If successful, returns a Hashmap containing those 3 strings.
-     * Adapted: https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
-     * @param inp Raw input string
-     * @return A hashmap containing:
-     *      - the title of the task in the "desc" key.
-     *      - the start time of the task in the "from" key.
-     *      - the end time of the task in the "to" key.
+    * Parses a string of the form {@code "event DESCRIPTION /from START /to END"} with all parts non-empty.
+    * If successful, returns a Hashmap containing those 3 strings.
+    * Adapted: https://stackoverflow.com/questions/26750963/what-does-replace-do-if-no-match-is-found-under-the-hood
+    * @param inp Raw input string
+    * @return A hashmap containing:
+    *      - the title of the task in the "desc" key.
+    *      - the start time of the task in the "from" key.
+    *      - the end time of the task in the "to" key.
      */
     public HashMap<String, String> parseEventTask(
             String inp
@@ -149,11 +146,11 @@ public class CommandParser {
     }
 
     /**
-     * Parses a string of the form "find <arbitrary non-empty string>".
+     * Parses a string of the form {@code "find KEYWORD"} where KEYWORD is non-empty.
      * Note that this string will be used as a keyword to search for tasks.
      * @param inp Raw input string.
      * @return the keyword to search for.
-     * @throws IllegalArgumentException if keyword is missing or blank.
+     * @throws CommandIsMissingArgumentException if keyword is missing or blank.
      */
     public String parseFindTask(String inp) throws CommandIsMissingArgumentException {
         String keyword = inp.replaceFirst("find", "").strip();

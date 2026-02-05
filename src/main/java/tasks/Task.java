@@ -1,10 +1,7 @@
 package tasks;
 /**
- * Denotes a task that user provides.
- * A task can be done or not done.
- * This is a base class and should no longer be instantiated.
- * ... is what I gather from reading the specification, which is
- * awfully vague about this matter
+ * Denotes a task provided by the user.
+ * A task can be done or not done; concrete subclasses represent specific task types.
  */
 
 public abstract class Task {
@@ -25,14 +22,14 @@ public abstract class Task {
         this.done = done;
     }
 
-    /** 
+    /**
      * Mark the task as done.
      */
     public void markDone() {
         this.done = true;
     }
 
-    /** 
+    /**
      * Mark the task as not done.
      */
     public void markUndone() {

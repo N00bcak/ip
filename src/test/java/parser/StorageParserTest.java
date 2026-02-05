@@ -1,16 +1,17 @@
 package parser;
 
-import exceptions.ParseStorageLineFailureException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
+
+import exceptions.ParseStorageLineFailureException;
 import tasks.DeadlineTask;
 import tasks.EventTask;
 import tasks.Task;
 import tasks.TodoTask;
-
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for StorageParser. Covered are:

@@ -1,11 +1,9 @@
 package tasks;
 
-import exceptions.NoTasksFoundException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import parser.StorageParser;
-import storage.Storage;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +11,13 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import exceptions.NoTasksFoundException;
+import parser.StorageParser;
+import storage.Storage;
 
 /**
  * Tests for TaskManager. Covered are:
@@ -70,7 +74,11 @@ public class TaskManagerTest {
 
         TodoTask todo = new TodoTask("Read book");
         DeadlineTask deadline = new DeadlineTask("return Book", LocalDate.parse("2019-12-02"));
-        EventTask event = new EventTask("project meeting", LocalDate.parse("2019-12-03"), LocalDate.parse("2019-12-04"));
+        EventTask event = new EventTask(
+            "project meeting",
+            LocalDate.parse("2019-12-03"),
+            LocalDate.parse("2019-12-04")
+        );
 
         manager.add(todo);
         manager.add(deadline);
@@ -89,10 +97,7 @@ public class TaskManagerTest {
 
         manager.add(new TodoTask("read book"));
 
-        NoTasksFoundException thrown = assertThrows(
-            NoTasksFoundException.class,
-            () -> manager.find("missing")
-        );
+        NoTasksFoundException thrown = assertThrows(NoTasksFoundException.class, () -> manager.find("missing"));
         assertEquals("No tasks were found.", thrown.getMessage());
     }
 }

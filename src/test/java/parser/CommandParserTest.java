@@ -1,20 +1,21 @@
 package parser;
 
-import exceptions.CommandIsMissingArgumentException;
-import exceptions.TaskDescriptionIsEmptyException;
-import exceptions.TaskIsMissingArgumentException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import tasks.TaskManager;
-import tasks.TodoTask;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import exceptions.CommandIsMissingArgumentException;
+import exceptions.TaskDescriptionIsEmptyException;
+import exceptions.TaskIsMissingArgumentException;
+import tasks.TaskManager;
+import tasks.TodoTask;
 
 /**
  * Tests for CommandParser. Covered are:
@@ -67,30 +68,18 @@ public class CommandParserTest {
 
     @Test
     void parseTodoEmptyDescriptionThrowsIsEmpty() {
-        assertThrows(
-            TaskDescriptionIsEmptyException.class,
-            () -> parser.parseTodoTask("todo   ")
-        );
+        assertThrows(TaskDescriptionIsEmptyException.class, () -> parser.parseTodoTask("todo   "));
     }
 
     @Test
     void parseDeadlineMissingByThrowsIsMissing() {
-        assertThrows(
-            TaskIsMissingArgumentException.class,
-            () -> parser.parseDeadlineTask("deadline do homework")
-        );
+        assertThrows(TaskIsMissingArgumentException.class, () -> parser.parseDeadlineTask("deadline do homework"));
     }
 
     @Test
     void parseEventMissingFromOrToThrowsIsMissing() {
-        assertThrows(
-            TaskIsMissingArgumentException.class,
-            () -> parser.parseEventTask("event party /from tonight")
-        );
-        assertThrows(
-            TaskIsMissingArgumentException.class,
-            () -> parser.parseEventTask("event party /to tomorrow")
-        );
+        assertThrows(TaskIsMissingArgumentException.class, () -> parser.parseEventTask("event party /from tonight"));
+        assertThrows(TaskIsMissingArgumentException.class, () -> parser.parseEventTask("event party /to tomorrow"));
     }
 
     @Test
