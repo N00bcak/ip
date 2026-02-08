@@ -25,6 +25,11 @@ public class DeadlineTask extends Task {
     }
 
     @Override
+    public LocalDate getSortDate() {
+        return this.deadline;
+    }
+
+    @Override
     public String toString() {
         // Reused from https://nus-cs2103-ay2526-s2.github.io/website/schedule/week3/project.html
         String formattedDeadline = this.deadline.format(OUTPUT_FORMAT);
