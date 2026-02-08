@@ -19,6 +19,7 @@ public class TaskManager {
      * @param storage The storage location
      */
     public TaskManager(Storage storage) {
+        assert storage != null : "Storage must not be null";
         this.storage = storage;
         this.taskList.addAll(this.storage.load());
     }
@@ -28,6 +29,7 @@ public class TaskManager {
      * @param task Task instance.
      */
     public void add(Task task) {
+        assert task != null : "Task to add must not be null";
         this.taskList.add(task);
         this.persist();
     }
@@ -38,6 +40,7 @@ public class TaskManager {
      * @return the task at index taskIndex
      */
     public Task get(int taskIndex) {
+        assert taskIndex >= 0 && taskIndex < this.taskList.size() : "Task index is out of bounds";
         return this.taskList.get(taskIndex);
     }
 
@@ -64,6 +67,7 @@ public class TaskManager {
      * @param taskIndex the index of the task to be deleted.
      */
     public Task delete(int taskIndex) {
+        assert taskIndex >= 0 && taskIndex < this.taskList.size() : "Task index is out of bounds";
         Task removed = this.taskList.remove(taskIndex);
         this.persist();
         return removed;
@@ -83,6 +87,7 @@ public class TaskManager {
      * @return a list of matching tasks.
      */
     public List<Task> find(String keyword) throws NoTasksFoundException {
+        assert keyword != null && !keyword.isBlank() : "Keyword to find must not be blank";
         String lowered = keyword.toLowerCase();
         List<Task> matches = new ArrayList<>();
         for (Task task : this.taskList) {

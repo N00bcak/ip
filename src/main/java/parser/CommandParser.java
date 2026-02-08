@@ -20,6 +20,7 @@ public class CommandParser {
      * @param taskManager The to-be-composed task manager.
      */
     public CommandParser(TaskManager taskManager) {
+        assert taskManager != null : "TaskManager must not be null";
         this.taskManager = taskManager;
     }
 
@@ -32,6 +33,7 @@ public class CommandParser {
      * @return An integer corresponding to the index.
      */
     public int parseMarkOrUnmark(String inp) throws IllegalArgumentException, IndexOutOfBoundsException {
+        assert inp != null : "Mark/Unmark input should not be null";
         return parseIndexedCommand(inp, "Input should be of format 'mark x' or 'unmark x'!");
     }
 
@@ -42,6 +44,7 @@ public class CommandParser {
      * @return An integer corresponding to the index.
      */
     public int parseDeleteTask(String inp) throws IllegalArgumentException, IndexOutOfBoundsException {
+        assert inp != null : "Delete input should not be null";
         return parseIndexedCommand(inp, "Input should be of format 'delete x'!");
     }
     /**
@@ -52,6 +55,7 @@ public class CommandParser {
     * @return A hashmap containing the title of the task in the "desc" key.
      */
     public HashMap<String, String> parseTodoTask(String inp) throws TaskDescriptionIsEmptyException {
+        assert inp != null : "Todo input should not be null";
         String arg = inp.replaceFirst("todo", "").strip();
         if (arg.isEmpty()) {
             throw new TaskDescriptionIsEmptyException(inp);
@@ -73,6 +77,7 @@ public class CommandParser {
     public HashMap<String, String> parseDeadlineTask(
             String inp
     ) throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
+        assert inp != null : "Deadline input should not be null";
         String deadlineString = inp.replaceFirst("deadline", "").strip();
         if (deadlineString.isEmpty()) {
             throw new TaskDescriptionIsEmptyException(inp);
@@ -100,6 +105,7 @@ public class CommandParser {
     public HashMap<String, String> parseEventTask(
             String inp
     ) throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
+        assert inp != null : "Event input should not be null";
         String eventString = inp.replaceFirst("event", "").strip();
         if (eventString.isEmpty()) {
             throw new TaskDescriptionIsEmptyException(inp);
@@ -127,6 +133,7 @@ public class CommandParser {
      * @throws CommandIsMissingArgumentException if keyword is missing or blank.
      */
     public String parseFindTask(String inp) throws CommandIsMissingArgumentException {
+        assert inp != null : "Find input should not be null";
         String keyword = inp.replaceFirst("find", "").strip();
         if (keyword.isEmpty()) {
             throw new CommandIsMissingArgumentException(inp);
