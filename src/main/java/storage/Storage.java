@@ -31,6 +31,7 @@ public class Storage {
      * @param storageParser Storage Parser companion object.
      */
     public Storage(StorageParser storageParser) {
+        assert storageParser != null : "StorageParser must not be null";
         this.storagePath = Paths.get("data", "dooki.txt");
         this.storageParser = storageParser;
     }
@@ -62,6 +63,7 @@ public class Storage {
             List<String> lines = Files.readAllLines(this.storagePath);
             for (String line : lines) {
                 Task task = this.storageParser.parseStorageLine(line);
+                assert task != null : "Parsed task should not be null";
                 tasks.add(task);
             }
         } catch (IOException e) {
@@ -77,6 +79,7 @@ public class Storage {
      * @param tasks List of tasks written to disk.
      */
     public void save(List<Task> tasks) {
+        assert tasks != null : "Tasks to save must not be null";
         try {
             ensureFileExists();
             List<String> lines = tasks.stream()
@@ -94,6 +97,7 @@ public class Storage {
      * @return A string describing the task.
      */
     private String formatTask(Task task) {
+        assert task != null : "Task to format must not be null";
         String status = task.isDone() ? "1" : "0";
         // Reuse from IDE suggestion to invoke instanceof.
         if (task instanceof TodoTask) {
@@ -105,6 +109,7 @@ public class Storage {
             );
         }
         if (task instanceof DeadlineTask deadlineTask) {
+            assert deadlineTask.getDeadline() != null : "Deadline must not be null";
             return String.join(
                 " | ",
                 "D",
@@ -114,6 +119,8 @@ public class Storage {
             );
         }
         if (task instanceof EventTask eventTask) {
+            assert eventTask.getFrom() != null : "Event start must not be null";
+            assert eventTask.getTo() != null : "Event end must not be null";
             return String.join(
                 " | ",
                 "E",
