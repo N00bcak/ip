@@ -66,34 +66,36 @@ public class DookiBot {
      */
     public String getResponse(String input) {
         String trimmed = input == null ? "" : input.trim();
-        if (trimmed.equals("bye")) {
-            this.isExit = true;
-            return GOODBYE_MESSAGE;
+        if (trimmed.isEmpty()) {
+            return "I didn't understand that command. Please try again?";
         }
 
+        String[] tokens = trimmed.split("\\s+", 2);
+        String command = tokens[0];
+
         try {
-            if (trimmed.equals("list")) {
+            switch (command) {
+            case "bye":
+                this.isExit = true;
+                return GOODBYE_MESSAGE;
+            case "list":
                 return formatTaskList();
-            }
-            if (trimmed.startsWith("delete")) {
+            case "delete":
                 return handleDelete(trimmed);
-            }
-            if (trimmed.startsWith("mark") || trimmed.startsWith("unmark")) {
+            case "mark":
+            case "unmark":
                 return handleMarking(trimmed);
-            }
-            if (trimmed.startsWith("todo")) {
+            case "todo":
                 return handleTodo(trimmed);
-            }
-            if (trimmed.startsWith("deadline")) {
+            case "deadline":
                 return handleDeadline(trimmed);
-            }
-            if (trimmed.startsWith("event")) {
+            case "event":
                 return handleEvent(trimmed);
-            }
-            if (trimmed.startsWith("find")) {
+            case "find":
                 return handleFind(trimmed);
+            default:
+                throw new UnsupportedCommandException();
             }
-            throw new UnsupportedCommandException();
         } catch (UnsupportedCommandException e) {
             return "I didn't understand that command. Please try again?";
         } catch (TaskDescriptionIsEmptyException e) {
