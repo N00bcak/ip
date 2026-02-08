@@ -20,6 +20,7 @@ public class CommandParser {
      * @param taskManager The to-be-composed task manager.
      */
     public CommandParser(TaskManager taskManager) {
+        assert taskManager != null : "TaskManager must not be null";
         this.taskManager = taskManager;
     }
 
@@ -32,20 +33,8 @@ public class CommandParser {
      * @return An integer corresponding to the index.
      */
     public int parseMarkOrUnmark(String inp) throws IllegalArgumentException, IndexOutOfBoundsException {
-        String[] tokens = inp.split(" ");
-        if (tokens.length < 2) {
-            throw new IllegalArgumentException("Input should be of format 'mark x' or 'unmark x'!");
-        }
-        /*
-         Note: The website specification implies the list uses 1-indexing
-         (as far as the user is concerned)
-         So we must compensate.
-        */
-        int index = Integer.parseInt(tokens[1]) - 1;
-        if (index < 0 || index >= this.taskManager.size()) {
-            throw new IndexOutOfBoundsException("Invalid task number.");
-        }
-        return index;
+        assert inp != null : "Mark/Unmark input should not be null";
+        return parseIndexedCommand(inp, "Input should be of format 'mark x' or 'unmark x'!");
     }
 
     /**
@@ -55,20 +44,8 @@ public class CommandParser {
      * @return An integer corresponding to the index.
      */
     public int parseDeleteTask(String inp) throws IllegalArgumentException, IndexOutOfBoundsException {
-        String[] tokens = inp.split(" ");
-        if (tokens.length < 2) {
-            throw new IllegalArgumentException("Input should be of format 'delete x'!");
-        }
-        /*
-         Note: The website specification implies the list uses 1-indexing
-         (as far as the user is concerned)
-         So we must compensate.
-        */
-        int index = Integer.parseInt(tokens[1]) - 1;
-        if (index < 0 || index >= this.taskManager.size()) {
-            throw new IndexOutOfBoundsException("Invalid task number.");
-        }
-        return index;
+        assert inp != null : "Delete input should not be null";
+        return parseIndexedCommand(inp, "Input should be of format 'delete x'!");
     }
     /**
     * Parses a string of the form {@code "todo DESCRIPTION"} where DESCRIPTION is non-empty.
@@ -78,6 +55,7 @@ public class CommandParser {
     * @return A hashmap containing the title of the task in the "desc" key.
      */
     public HashMap<String, String> parseTodoTask(String inp) throws TaskDescriptionIsEmptyException {
+        assert inp != null : "Todo input should not be null";
         String arg = inp.replaceFirst("todo", "").strip();
         if (arg.isEmpty()) {
             throw new TaskDescriptionIsEmptyException(inp);
@@ -99,6 +77,7 @@ public class CommandParser {
     public HashMap<String, String> parseDeadlineTask(
             String inp
     ) throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
+        assert inp != null : "Deadline input should not be null";
         String deadlineString = inp.replaceFirst("deadline", "").strip();
         if (deadlineString.isEmpty()) {
             throw new TaskDescriptionIsEmptyException(inp);
@@ -126,6 +105,7 @@ public class CommandParser {
     public HashMap<String, String> parseEventTask(
             String inp
     ) throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
+        assert inp != null : "Event input should not be null";
         String eventString = inp.replaceFirst("event", "").strip();
         if (eventString.isEmpty()) {
             throw new TaskDescriptionIsEmptyException(inp);
@@ -153,10 +133,29 @@ public class CommandParser {
      * @throws CommandIsMissingArgumentException if keyword is missing or blank.
      */
     public String parseFindTask(String inp) throws CommandIsMissingArgumentException {
+        assert inp != null : "Find input should not be null";
         String keyword = inp.replaceFirst("find", "").strip();
         if (keyword.isEmpty()) {
             throw new CommandIsMissingArgumentException(inp);
         }
         return keyword;
+    }
+
+    private int parseIndexedCommand(String inp, String usageMessage)
+            throws IllegalArgumentException, IndexOutOfBoundsException {
+        String[] tokens = inp.split(" ");
+        if (tokens.length < 2) {
+            throw new IllegalArgumentException(usageMessage);
+        }
+        /*
+         Note: The website specification implies the list uses 1-indexing
+         (as far as the user is concerned)
+         So we must compensate.
+        */
+        int index = Integer.parseInt(tokens[1]) - 1;
+        if (index < 0 || index >= this.taskManager.size()) {
+            throw new IndexOutOfBoundsException("Invalid task number.");
+        }
+        return index;
     }
 }

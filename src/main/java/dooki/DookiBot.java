@@ -35,8 +35,11 @@ public class DookiBot {
      */
     public DookiBot() {
         Storage storage = new Storage(new StorageParser());
+        assert storage != null : "Storage should be initialized";
         this.taskManager = new TaskManager(storage);
+        assert this.taskManager != null : "TaskManager should be initialized";
         this.commandParser = new CommandParser(this.taskManager);
+        assert this.commandParser != null : "CommandParser should be initialized";
         this.isExit = false;
     }
 
@@ -66,13 +69,19 @@ public class DookiBot {
      */
     public String getResponse(String input) {
         String trimmed = input == null ? "" : input.trim();
-        if (trimmed.equals("bye")) {
-            this.isExit = true;
-            return GOODBYE_MESSAGE;
+        if (trimmed.isEmpty()) {
+            return "I didn't understand that command. Please try again?";
         }
 
+        String[] tokens = trimmed.split("\\s+", 2);
+        String command = tokens[0];
+
         try {
-            if (trimmed.equals("list")) {
+            switch (command) {
+            case "bye":
+                this.isExit = true;
+                return GOODBYE_MESSAGE;
+            case "list":
                 return formatTaskList();
             }
             if (trimmed.equals("sort")) {
@@ -80,23 +89,20 @@ public class DookiBot {
             }
             if (trimmed.startsWith("delete")) {
                 return handleDelete(trimmed);
-            }
-            if (trimmed.startsWith("mark") || trimmed.startsWith("unmark")) {
+            case "mark":
+            case "unmark":
                 return handleMarking(trimmed);
-            }
-            if (trimmed.startsWith("todo")) {
+            case "todo":
                 return handleTodo(trimmed);
-            }
-            if (trimmed.startsWith("deadline")) {
+            case "deadline":
                 return handleDeadline(trimmed);
-            }
-            if (trimmed.startsWith("event")) {
+            case "event":
                 return handleEvent(trimmed);
-            }
-            if (trimmed.startsWith("find")) {
+            case "find":
                 return handleFind(trimmed);
+            default:
+                throw new UnsupportedCommandException();
             }
-            throw new UnsupportedCommandException();
         } catch (UnsupportedCommandException e) {
             return "I didn't understand that command. Please try again?";
         } catch (TaskDescriptionIsEmptyException e) {
@@ -141,6 +147,8 @@ public class DookiBot {
 
     private String handleTodo(String input) throws TaskDescriptionIsEmptyException {
         HashMap<String, String> taskMap = this.commandParser.parseTodoTask(input);
+        assert taskMap.containsKey("desc") && taskMap.get("desc") != null
+                : "Todo task description should be present";
         TodoTask newTask = new TodoTask(taskMap.get("desc"));
         this.taskManager.add(newTask);
         return formatTaskAdded(newTask);
@@ -149,6 +157,8 @@ public class DookiBot {
     private String handleDeadline(String input)
             throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
         HashMap<String, String> taskMap = this.commandParser.parseDeadlineTask(input);
+        assert taskMap.containsKey("desc") && taskMap.containsKey("by")
+            : "Deadline task must have desc and by";
         LocalDate deadline = LocalDate.parse(taskMap.get("by"));
         DeadlineTask newTask = new DeadlineTask(taskMap.get("desc"), deadline);
         this.taskManager.add(newTask);
@@ -158,6 +168,8 @@ public class DookiBot {
     private String handleEvent(String input)
             throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
         HashMap<String, String> taskMap = this.commandParser.parseEventTask(input);
+        assert taskMap.containsKey("desc") && taskMap.containsKey("from") && taskMap.containsKey("to")
+            : "Event task must have desc, from, and to";
         LocalDate from = LocalDate.parse(taskMap.get("from"));
         LocalDate to = LocalDate.parse(taskMap.get("to"));
         EventTask newTask = new EventTask(taskMap.get("desc"), from, to);
@@ -168,6 +180,7 @@ public class DookiBot {
     private String handleFind(String input) {
         String keyword = this.commandParser.parseFindTask(input);
         List<Task> matches = this.taskManager.find(keyword);
+        assert matches != null : "Find operation should produce a list";
         return formatFindResults(matches);
     }
 
