@@ -32,6 +32,11 @@ public class EventTask extends Task {
     }
 
     @Override
+    public LocalDate getSortDate() {
+        return this.from;
+    }
+
+    @Override
     public String toString() {
         String formattedFrom = this.from.format(OUTPUT_FORMAT);
         String formattedTo = this.to.format(OUTPUT_FORMAT);

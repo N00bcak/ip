@@ -75,6 +75,9 @@ public class DookiBot {
             if (trimmed.equals("list")) {
                 return formatTaskList();
             }
+            if (trimmed.equals("sort")) {
+                return handleSort();
+            }
             if (trimmed.startsWith("delete")) {
                 return handleDelete(trimmed);
             }
@@ -119,6 +122,11 @@ public class DookiBot {
         int delIndex = this.commandParser.parseDeleteTask(input);
         Task removed = this.taskManager.delete(delIndex);
         return "Noted. I've removed this task:\n" + removed;
+    }
+
+    private String handleSort() {
+        this.taskManager.sortByDate();
+        return "Sorted tasks by date:\n" + this.taskManager;
     }
 
     private String handleMarking(String input) {

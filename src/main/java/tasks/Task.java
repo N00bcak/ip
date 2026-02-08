@@ -1,4 +1,7 @@
 package tasks;
+
+import java.time.LocalDate;
+
 /**
  * Denotes a task provided by the user.
  * A task can be done or not done; concrete subclasses represent specific task types.
@@ -46,6 +49,15 @@ public abstract class Task {
 
     public String getDescription() {
         return this.description;
+    }
+
+    /**
+     * Returns the date used for chronological sorting.
+     * Subclasses without an inherent date return null to indicate they should be ordered after dated tasks.
+     * @return a LocalDate for sorting, or null if the task has no date.
+     */
+    public LocalDate getSortDate() {
+        return null;
     }
 
     public String getDoneSymbol() {

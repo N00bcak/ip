@@ -1,5 +1,6 @@
 package tasks;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +95,29 @@ public class TaskManager {
             throw new NoTasksFoundException();
         }
         return matches;
+    }
+
+    /**
+     * Sorts tasks chronologically by their date (if present).
+     * Tasks without dates stay after dated tasks; equal dates keep their existing order.
+     */
+    public void sortByDate() {
+        this.taskList.sort((taskA, taskB) -> {
+            LocalDate dateA = taskA.getSortDate();
+            LocalDate dateB = taskB.getSortDate();
+
+            if (dateA == null && dateB == null) {
+                return 0;
+            }
+            if (dateA == null) {
+                return 1;
+            }
+            if (dateB == null) {
+                return -1;
+            }
+            return dateA.compareTo(dateB);
+        });
+        this.persist();
     }
 
     private void persist() {

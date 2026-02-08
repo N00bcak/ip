@@ -100,4 +100,31 @@ public class TaskManagerTest {
         NoTasksFoundException thrown = assertThrows(NoTasksFoundException.class, () -> manager.find("missing"));
         assertEquals("No tasks were found.", thrown.getMessage());
     }
+
+    @Test
+    void sortByDateOrdersChronologicallyAndKeepsUndatedLast() {
+        Storage storage = new Storage(new StorageParser());
+        TaskManager manager = new TaskManager(storage);
+
+        DeadlineTask deadlineLater = new DeadlineTask("return book", LocalDate.parse("2020-01-02"));
+        TodoTask todo = new TodoTask("read something");
+        DeadlineTask deadlineSoon = new DeadlineTask("submit report", LocalDate.parse("2020-01-01"));
+        EventTask event = new EventTask(
+            "project meeting",
+            LocalDate.parse("2020-01-01"),
+            LocalDate.parse("2020-01-03")
+        );
+
+        manager.add(deadlineLater);
+        manager.add(todo);
+        manager.add(deadlineSoon);
+        manager.add(event);
+
+        manager.sortByDate();
+
+        assertEquals(deadlineSoon, manager.get(0));
+        assertEquals(event, manager.get(1));
+        assertEquals(deadlineLater, manager.get(2));
+        assertEquals(todo, manager.get(3));
+    }
 }
