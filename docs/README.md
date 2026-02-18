@@ -1,5 +1,7 @@
 # Dooki User Guide
 
+![Image of Dooki in action](Ui.png)
+
 <!-- Reuse AI generated documentation as noted in `AI.md`-->
 
 Welcome to **Dooki**, a lightweight task assistant that works in both Text UI and JavaFX GUI. Dooki helps you track todos, deadlines, and events; mark or unmark them; find matching tasks; sort them by date; and persist them between sessions.
