@@ -65,6 +65,7 @@ public class TaskManager {
 
     /**
      * Marks a task for deletion.
+     *
      * @param taskIndex the index of the task to be deleted.
      */
     public Task delete(int taskIndex) {
@@ -75,15 +76,17 @@ public class TaskManager {
     }
 
     /**
-     * Report the number of tasks in the manager's purview
-     * @return An integer denoting the number of tasks.
+     * Reports the number of tasks in the manager's purview.
+     *
+     * @return an integer denoting the number of tasks.
      */
     public int size() {
         return this.taskList.size();
     }
 
     /**
-     * Find all tasks with given keyword in their descriptions.
+     * Finds all tasks with the given keyword in their descriptions.
+     *
      * @param keyword given description keyword.
      * @return a list of matching tasks.
      */
