@@ -23,6 +23,7 @@ import tasks.TodoTask;
  * Encapsulates Dooki's command handling for both CLI and GUI frontends.
  */
 public class DookiBot {
+    private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String GOODBYE_MESSAGE = "Bye. Hope to see you again soon!";
     private static final String WELCOME_MESSAGE = "Hello! I'm Dooki\nWhat can I do for you?";
 
@@ -83,11 +84,9 @@ public class DookiBot {
                 return GOODBYE_MESSAGE;
             case "list":
                 return formatTaskList();
-            }
-            if (trimmed.equals("sort")) {
+            case "sort":
                 return handleSort();
-            }
-            if (trimmed.startsWith("delete")) {
+            case "delete":
                 return handleDelete(trimmed);
             case "mark":
             case "unmark":
@@ -104,23 +103,24 @@ public class DookiBot {
                 throw new UnsupportedCommandException();
             }
         } catch (UnsupportedCommandException e) {
-            return "I didn't understand that command. Please try again?";
+            return ERROR_PREFIX + "I didn't understand that command. Please try again?";
         } catch (TaskDescriptionIsEmptyException e) {
-            return "Your task has an invalid description :(";
+            return ERROR_PREFIX + "Your todo task has an invalid description :(";
         } catch (TaskIsMissingArgumentException e) {
-            return "Your task is missing argument " + e.missingArg;
+            return ERROR_PREFIX + "Your task is missing argument " + e.missingArg;
         } catch (DateTimeParseException e) {
-            return "Your date is invalid. Please use yyyy-MM-dd format.";
+            return ERROR_PREFIX + "Your date is invalid. Please use yyyy-MM-dd format.";
         } catch (IllegalArgumentException e) {
-            return e.getMessage() == null
+            String message = e.getMessage() == null
                     ? "Your command is missing a required argument :("
                     : e.getMessage();
+            return ERROR_PREFIX + message;
         } catch (IndexOutOfBoundsException e) {
-            return "You did not provide a valid task index :(";
+            return ERROR_PREFIX + "You did not provide a valid task index :(";
         } catch (NoTasksFoundException e) {
             return "There are no matching tasks in your list.";
         } catch (CommandIsMissingArgumentException e) {
-            return "I can't find it if it doesn't exist :(";
+            return ERROR_PREFIX + "I can't find it if it doesn't exist :(";
         }
     }
 

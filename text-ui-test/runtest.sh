@@ -24,14 +24,14 @@ then
 fi
 
 # compile the code into the bin folder, terminates if error occurred
-if ! javac -cp src/main/java -Xlint:none -d bin src/main/java/dooki/Dooki.java
+if ! javac -cp src/main/java -Xlint:none -d bin src/main/java/dooki/DookiText.java
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath bin Dooki < "$SCRIPT_DIR/input.txt" > "$SCRIPT_DIR/ACTUAL.TXT"
+java -classpath bin dooki.DookiText < "$SCRIPT_DIR/input.txt" > "$SCRIPT_DIR/ACTUAL.TXT"
 
 # compare the output to the expected output
 diff "$SCRIPT_DIR/ACTUAL.TXT" "$SCRIPT_DIR/EXPECTED.TXT"
