@@ -105,7 +105,7 @@ public class DookiBot {
         } catch (UnsupportedCommandException e) {
             return ERROR_PREFIX + "I didn't understand that command. Please try again?";
         } catch (TaskDescriptionIsEmptyException e) {
-            return ERROR_PREFIX + "Your todo task has an invalid description :(";
+            return ERROR_PREFIX + "Your task has an invalid description :(";
         } catch (TaskIsMissingArgumentException e) {
             return ERROR_PREFIX + "Your task is missing argument " + e.missingArg;
         } catch (DateTimeParseException e) {

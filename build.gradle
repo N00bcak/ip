@@ -60,7 +60,6 @@ application {
 
 shadowJar {
     archiveBaseName = "dooki"
-    archiveClassifier = null
 }
 
 run{

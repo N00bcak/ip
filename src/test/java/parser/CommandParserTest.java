@@ -77,9 +77,19 @@ public class CommandParserTest {
     }
 
     @Test
+    void parseDeadlineEmptyDescriptionThrowsIsEmpty() {
+        assertThrows(TaskDescriptionIsEmptyException.class, () -> parser.parseDeadlineTask("deadline   /by 2019-12-02"));
+    }
+
+    @Test
     void parseEventMissingFromOrToThrowsIsMissing() {
         assertThrows(TaskIsMissingArgumentException.class, () -> parser.parseEventTask("event party /from tonight"));
         assertThrows(TaskIsMissingArgumentException.class, () -> parser.parseEventTask("event party /to tomorrow"));
+    }
+
+    @Test
+    void parseEventEmptyDescriptionThrowsIsEmpty() {
+        assertThrows(TaskDescriptionIsEmptyException.class, () -> parser.parseEventTask("event   /from 2019-12-03 /to 2019-12-04"));
     }
 
     @Test

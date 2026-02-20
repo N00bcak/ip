@@ -79,15 +79,16 @@ public class CommandParser {
     ) throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
         assert inp != null : "Deadline input should not be null";
         String deadlineString = inp.replaceFirst("deadline", "").strip();
-        if (deadlineString.isEmpty()) {
-            throw new TaskDescriptionIsEmptyException(inp);
-        }
         String[] args = deadlineString.split("/by ");
         if (args.length != 2) {
             throw new TaskIsMissingArgumentException(inp, "/by");
         }
         HashMap<String, String> taskSpec = new HashMap<>();
-        taskSpec.put("desc", args[0].strip());
+        String desc = args[0].strip();
+        if (desc.isEmpty()) {
+            throw new TaskDescriptionIsEmptyException(inp);
+        }
+        taskSpec.put("desc", desc);
         taskSpec.put("by", args[1].strip());
         return taskSpec;
     }
@@ -107,12 +108,13 @@ public class CommandParser {
     ) throws TaskDescriptionIsEmptyException, TaskIsMissingArgumentException {
         assert inp != null : "Event input should not be null";
         String eventString = inp.replaceFirst("event", "").strip();
-        if (eventString.isEmpty()) {
-            throw new TaskDescriptionIsEmptyException(inp);
-        }
         String[] args = eventString.split("/from ");
         HashMap<String, String> taskSpec = new HashMap<>();
-        taskSpec.put("desc", args[0].strip());
+        String desc = args[0].strip();
+        if (desc.isEmpty()) {
+            throw new TaskDescriptionIsEmptyException(inp);
+        }
+        taskSpec.put("desc", desc);
         if (args.length != 2) {
             throw new TaskIsMissingArgumentException(inp, "/from");
         }
