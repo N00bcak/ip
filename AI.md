@@ -18,3 +18,4 @@
     - Unfortunately, it did not have the tools to interface with GUI applications like JavaFX, so I had to manually verify the GUI functionality and error handling.
 
 - Non-trivial message which will hopefully trigger the progress bot to recognize my commits 
+- It really is kind of weird this is happening because of ONE EXTRA CHARACTER.
