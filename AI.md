@@ -19,3 +19,4 @@
 - **I hereby confirm I followed the Git Standard**:
   - Once
   - Twice
+  - Thrice
