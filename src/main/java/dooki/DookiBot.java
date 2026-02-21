@@ -47,7 +47,7 @@ public class DookiBot {
     /**
      * Returns the welcome banner shown on startup.
      *
-     * @return welcome message.
+     * @return a welcome message.
      */
     public String getWelcomeMessage() {
         return WELCOME_MESSAGE;
