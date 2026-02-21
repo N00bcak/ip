@@ -18,3 +18,4 @@
     - Unfortunately, it did not have the tools to interface with GUI applications like JavaFX, so I had to manually verify the GUI functionality and error handling.
 - **I hereby confirm I followed the Git Standard**:
   - Once
+  - Twice
